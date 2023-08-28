@@ -18,9 +18,11 @@ Projeto de calculadora IMC da DIO - Bootcamp Santander.
 graph LR
 A[Usuario] -- Insere os dados --> B{Dados Corretos?}
 B -- Sim --> C[Instancia Pessoa]
-B -- Não --> E[Fim do Programa]
+B -- Não --> E[Trata Exception]
+E --> F[Imprime erros]
+F --> G
 C -- Calcula IMC --> D[Imprime os Dados]
-D --> E
+D --> G[Fim do Programa]
 ```
 
 ### Minhas redes sociais, conecte-se comigo:
