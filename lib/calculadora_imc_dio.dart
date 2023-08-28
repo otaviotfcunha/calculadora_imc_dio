@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:calculadora_imc_dio/exception/nome_invalido_exception.dart';
 import 'package:calculadora_imc_dio/models/console_utils.dart';
 import 'package:calculadora_imc_dio/models/pessoa.dart';
 
@@ -15,22 +14,13 @@ void execute(){
     double? peso;
     double? altura;
     nome = ConsoleUtils.lerStringComTexto("Digite o nome da pessoa que deseja calcular o IMC: ");
-    try {
-      if(nome.trim() == ""){
-        throw NomeInvalidoException();
-      }
-    } on NomeInvalidoException {
-      print(NomeInvalidoException);
-      executa = false;
-      error = true;
-      break;
-    } catch (e) {
-      print(e);
+    if(ConsoleUtils.verificaNome(nome) == true){
+      pessoa.setNome(nome);
+    }else{
       executa = false;
       error = true;
       break;
     }
-    pessoa.setNome(nome);
     peso = ConsoleUtils.lerDoubleComTextoComSaida("Digite o peso (kg) do ${pessoa.getNome()} ou 'S' para SAIR: ", "S");
     if(peso != null){
       pessoa.setPeso(peso);
@@ -47,7 +37,7 @@ void execute(){
       error = true;
       break;
     }
-    if(pessoa.getNome() != null && pessoa.getPeso() != 0.0 && pessoa.getAltura() != 0.0){
+    if(pessoa.getPeso() != 0.0 && pessoa.getAltura() != 0.0){
       try {
         pessoa.calculaImc(pessoa.getPeso(), pessoa.getAltura());
       } catch (e) {
@@ -75,7 +65,4 @@ void execute(){
     print("-------------------------------------------------");
   }
 
-
-  
-  //aluno.aprovado(5.0) ? print("Situação: Aprovado.") : print("Situação: Reprovado.");
 }

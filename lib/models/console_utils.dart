@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:calculadora_imc_dio/exception/nome_invalido_exception.dart';
+import 'package:calculadora_imc_dio/exception/valor_invalido_exception.dart';
+
 class ConsoleUtils{
   static String lerString(){
     return stdin.readLineSync(encoding:utf8) ?? "";
@@ -30,10 +33,27 @@ class ConsoleUtils{
         }else{
           return double.parse(valor);
         }
+      } on ValorInvalidoException{
+        print(ValorInvalidoException);
       } catch (e) {
         print("Digite um valor válido!");
       }
       
     } while (true);
+  }
+  static bool? verificaNome(String nome){
+    bool retorno = true;
+    try {
+      if(nome.trim() == ""){
+        throw NomeInvalidoException();
+      }
+    } on NomeInvalidoException {
+      print(NomeInvalidoException);
+      retorno = false;
+    } catch (e) {
+      print(e);    
+      retorno = false;  
+    }
+    return retorno;
   }
 }
