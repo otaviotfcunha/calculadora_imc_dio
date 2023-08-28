@@ -16,13 +16,13 @@ Projeto de calculadora IMC da DIO - Bootcamp Santander.
 
 ```mermaid
 graph LR
-A[Usuario] -- Insere os dados --> B{Dados Corretos?}
+A((Inicio)) -- Insere os dados --> B{Dados Corretos?}
 B -- Sim --> C[Instancia Pessoa]
 B -- Não --> E[Trata Exception]
 E --> F[Imprime erros]
 F --> G
 C -- Calcula IMC --> D[Imprime os Dados]
-D --> G[Fim do Programa]
+D --> G((Fim))
 ```
 
 ### Minhas redes sociais, conecte-se comigo:
