@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:calculadora_imc_dio/exception/nome_invalido_exception.dart';
 import 'package:calculadora_imc_dio/exception/valor_invalido_exception.dart';
 
-class ConsoleUtils{
+class Utils{
   static String lerString(){
     return stdin.readLineSync(encoding:utf8) ?? "";
   }

@@ -1,60 +1,38 @@
 import 'dart:io';
 
-import 'package:calculadora_imc_dio/models/console_utils.dart';
+import 'package:calculadora_imc_dio/models/utils.dart';
 import 'package:calculadora_imc_dio/models/pessoa.dart';
 
 void execute(){
-  bool executa = true;
-  bool error = false;
   var pessoa = Pessoa();
   print("Bem vindo ao sistema de IMC!");
 
-  do {
-    String? nome;
-    double? peso;
-    double? altura;
-    nome = ConsoleUtils.lerStringComTexto("Digite o nome da pessoa que deseja calcular o IMC: ");
-    if(ConsoleUtils.verificaNome(nome) == true){
-      pessoa.setNome(nome);
-    }else{
-      executa = false;
-      error = true;
-      break;
-    }
-    peso = ConsoleUtils.lerDoubleComTextoComSaida("Digite o peso (kg) do ${pessoa.getNome()} ou 'S' para SAIR: ", "S");
-    if(peso != null){
-      pessoa.setPeso(peso);
-    }else{
-      executa = false;
-      error = true;
-      break;
-    }
-    altura = ConsoleUtils.lerDoubleComTextoComSaida("Digite a altura (metros) do ${pessoa.getNome()} ou 'S' para SAIR: ", "S");
-    if(altura != null){
-      pessoa.setAltura(altura);
-    }else{
-      executa = false;
-      error = true;
-      break;
-    }
-    if(pessoa.getPeso() != 0.0 && pessoa.getAltura() != 0.0){
-      try {
-        pessoa.calculaImc(pessoa.getPeso(), pessoa.getAltura());
-      } catch (e) {
-        print("Erro ao calcular o IMC.");
-        error = true;
-      }
-      executa = false;
-    }
-
-  } while (executa);
-
-  if(error){
-    print("O sistema será encerrado devido a um erro nos dados.");
+  String? nome = Utils.lerStringComTexto("Digite o nome da pessoa que deseja calcular o IMC: ");
+  if (Utils.verificaNome(nome) == true) {
+    pessoa.setNome(nome);
+  } else {
+    print("Nome inválido. O sistema será encerrado.");
     exit(0);
-  }else{
+  }
+
+  double? peso = Utils.lerDoubleComTextoComSaida("Digite o peso (kg) do ${pessoa.getNome()} ou 'S' para SAIR: ", "S");
+  if (peso == null) {
+    print("O sistema será encerrado.");
+    exit(0);
+  }
+  pessoa.setPeso(peso);
+
+  double? altura = Utils.lerDoubleComTextoComSaida("Digite a altura (metros) do ${pessoa.getNome()} ou 'S' para SAIR: ", "S");
+  if (altura == null) {
+    print("O sistema será encerrado.");
+    exit(0);
+  }
+  pessoa.setAltura(altura);
+
+  try {
+    pessoa.calculaImc(pessoa.getPeso(), pessoa.getAltura());
     print("-------------------------------------------------");
-    print("Os dados digitados do ${pessoa.getNome()} foram: ");
+    print("Os dados digitados do(a) ${pessoa.getNome()} foram: ");
     print("-------------------------------------------------");
     print("Peso: ${pessoa.getPeso()} Kgs.");
     print("Altura: ${pessoa.getAltura()} m.");
@@ -62,7 +40,11 @@ void execute(){
     print("O IMC do ${pessoa.getNome()} é: ");
     print("-------------------------------------------------");
     print("IMC: ${pessoa.getImc()}");
+    print("Estado: ${pessoa.getFraseImc()}");
     print("-------------------------------------------------");
+  } catch (e) {
+    print("Erro ao calcular o IMC.");
   }
 
 }
+
