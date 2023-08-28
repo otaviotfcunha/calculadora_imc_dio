@@ -1,2 +1,2 @@
-# calculadora_imc_dio
-Projeto de calculadora IMC da Dio - Bootcamp Santander
+A sample command-line application with an entrypoint in `bin/`, library code
+in `lib/`, and example unit test in `test/`.
